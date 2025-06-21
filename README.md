@@ -4,7 +4,7 @@
 ![GitHub release](https://img.shields.io/github/v/release/lina-torovoltas/Random-DumpGen)
 ![Downloads](https://img.shields.io/github/downloads/lina-torovoltas/Random-DumpGen/total)</br>
 
-Random dump generator in hex and oct format
+Random dump generator in hexadecimal and octal format.
 
 
 ## Usage
