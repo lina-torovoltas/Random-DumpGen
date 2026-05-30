@@ -11,16 +11,16 @@ int randint(int min, int max) {
 }
 
 
-// Generates a hexadecimal formatted dump with the specified number of lines and bytes per line.
+// Generates a hexadecimal formatted dump with the specified number of lines and bytes per line
 void generate_hex_dump(uint64_t lines, uint64_t rows) {
     FILE *file = fopen("dump.txt", "w");
     if (file == NULL) {
-        printf("Error opening the file.\n");
+        printf("Error opening the file\n");
         exit(1);
     }
 
     for (uint64_t i = 0; i < lines; i++) {
-        fprintf(file, "%08lx ", i);
+        fprintf(file, "%08llx ", (unsigned long long)i);
 
         for (uint64_t j = 0; j < rows; j++) {
             uint8_t value = (uint8_t)randint(0, 255);
@@ -31,20 +31,20 @@ void generate_hex_dump(uint64_t lines, uint64_t rows) {
     }
 
     fclose(file);
-    printf("File dump.txt has been successfully generated in hexadecimal format.\n");
+    printf("File dump.txt has been successfully generated in hexadecimal format\n");
 }
 
 
-// Generates an octal formatted dump with the specified number of lines and values per line.
+// Generates an octal formatted dump with the specified number of lines and values per line
 void generate_octal_dump(uint64_t lines, uint64_t rows) {
     FILE *file = fopen("dump.txt", "w");
     if (file == NULL) {
-        printf("Error opening the file.\n");
+        printf("Error opening the file\n");
         exit(1);
     }
 
     for (uint64_t i = 0; i < lines; i++) {
-        fprintf(file, "%04lo ", i);
+        fprintf(file, "%04llo ", (unsigned long long)i);
 
         for (uint64_t j = 0; j < rows; j++) {
             int value = randint(0, 63);
@@ -55,8 +55,9 @@ void generate_octal_dump(uint64_t lines, uint64_t rows) {
     }
 
     fclose(file);
-    printf("File dump.txt has been successfully generated in octal format.\n");
+    printf("File dump.txt has been successfully generated in octal format\n");
 }
+
 
 
 
@@ -64,7 +65,7 @@ int main(int argc, char *argv[]) {
     srand(time(NULL));
 
     if (argc != 2) {
-        printf("Error: You need to specify a flag (-hex or -oct).\n");
+        printf("Error: You need to specify a flag (-hex or -oct)\n");
         return 1;
     }
 
@@ -72,21 +73,28 @@ int main(int argc, char *argv[]) {
     uint64_t lines;
     uint64_t rows;
 
+
+    unsigned long long tmp_lines;
+    unsigned long long tmp_rows;
+
+
     printf("Enter the number of lines: ");
-    if (scanf("%lu", &lines) != 1) {
-        printf("Error: invalid input for lines.\n");
+    if (scanf("%llu", &tmp_lines) != 1) {
+        printf("Error: invalid input for lines\n");
         return 1;
     }
+    lines = (uint64_t)tmp_lines;
 
     printf("Enter the number of rows per line: ");
-    if (scanf("%lu", &rows) != 1) {
-        printf("Error: invalid input for rows.\n");
+    if (scanf("%llu", &tmp_rows) != 1) {
+        printf("Error: invalid input for rows\n");
         return 1;
     }
+    rows = (uint64_t)tmp_rows;
 
     if (strcmp(flag, "-hex") == 0) {
-        if (lines > 4294967296) {
-            printf("Error: Cannot create more than 4294967296 lines for hexadecimal dump.\n");
+        if (lines > 4294967296ULL) {
+            printf("Error: Cannot create more than 4294967296 lines for hexadecimal dump\n");
             return 1;
         }
         generate_hex_dump(lines, rows);
@@ -94,14 +102,14 @@ int main(int argc, char *argv[]) {
 
     else if (strcmp(flag, "-oct") == 0) {
         if (lines > 4096) {
-            printf("Error: Cannot create more than 4096 lines for octal dump.\n");
+            printf("Error: Cannot create more than 4096 lines for octal dump\n");
             return 1;
         }
         generate_octal_dump(lines, rows);
     } 
     
     else {
-        printf("Error: Unknown flag %s.\n", flag);
+        printf("Error: Unknown flag %s\n", flag);
         return 1;
     }
 
